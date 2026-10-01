@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>WONBIN AT CHANEL PFW · สุ่มคอมเม้น</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;800&family=Inter:wght@400;500;600&family=Noto+Sans+Thai:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --page: #ececec;
+        --card: #d3d3d3;
+        --ink: #0a0a0a;
+        --mute: #6b6b6b;
+        --sel: #bcd9f6;
+        --blue1: #b4d4f5;
+        --blue2: #6c9fd9;
+        --ui: "Inter", "Noto Sans Thai", system-ui, sans-serif;
+        --head: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+      body {
+        background: var(--page);
+        color: var(--ink);
+        font-family: var(--ui);
+        padding: max(22px, env(safe-area-inset-top)) 16px
+          max(30px, env(safe-area-inset-bottom));
+      }
+      .card {
+        position: relative;
+        max-width: 560px;
+        margin: 0 auto;
+        background: var(--card);
+        border-radius: 16px;
+        overflow: hidden;
+        padding: 26px 22px 0;
+      }
+      .deco {
+        position: absolute;
+        top: 34px;
+        right: 22px;
+        width: 58px;
+        height: auto;
+      }
+      .ico {
+        width: 100%;
+        height: auto;
+        display: block;
+        filter: drop-shadow(0 6px 8px rgba(40, 70, 110, 0.25));
+      }
+
+      /* เมนูคลิกขวา */
+      .ctx {
+        position: relative;
+        display: inline-flex;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+        margin-bottom: 22px;
+      }
+      .ctx button,
+      .ctx a {
+        font: inherit;
+        font-size: 14px;
+        color: var(--ink);
+        background: none;
+        border: 0;
+        text-decoration: none;
+        cursor: pointer;
+        padding: 9px 15px;
+        border-right: 1px solid #e3e3e3;
+        transition: background 0.12s;
+      }
+      .ctx > :first-child {
+        border-radius: 10px 0 0 10px;
+      }
+      .ctx > :last-child {
+        border-right: 0;
+        border-radius: 0 10px 10px 0;
+      }
+      .ctx button:hover,
+      .ctx a:hover {
+        background: #eef5fd;
+      }
+      .ctx::after {
+        content: "";
+        position: absolute;
+        left: 34px;
+        bottom: -6px;
+        width: 12px;
+        height: 12px;
+        background: #fff;
+        transform: rotate(45deg);
+        box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+        z-index: -1;
+      }
+
+      h1 {
+        position: relative;
+        margin: 0 0 22px;
+        font-family: var(--head);
+        text-transform: uppercase;
+        font-size: clamp(40px, 12.5vw, 70px);
+        line-height: 0.95;
+        letter-spacing: -0.045em;
+      }
+      h1 b {
+        display: block;
+        font-weight: 800;
+      }
+      h1 span {
+        display: block;
+        font-weight: 300;
+      }
+      .cursor {
+        position: absolute;
+        width: 26px;
+        right: 20%;
+        bottom: -10px;
+      }
+
+      /* หน้าต่างคอมเม้น */
+      .win {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 10px 26px rgba(0, 0, 0, 0.14);
+        overflow: hidden;
+      }
+      .bar {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 34px;
+        border-bottom: 1px solid #ececec;
+        font-size: 12px;
+        color: var(--mute);
+      }
+      .dots {
+        position: absolute;
+        left: 12px;
+        display: flex;
+        gap: 6px;
+      }
+      .dots i {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #ccc;
+      }
+      .dots i:nth-child(1) {
+        background: #ff6058;
+      }
+      .dots i:nth-child(2) {
+        background: #ffbd2e;
+      }
+      .dots i:nth-child(3) {
+        background: #28c840;
+      }
+      .text {
+        margin: 0;
+        padding: 20px 20px 24px;
+        min-height: 7.5em;
+        font-family: var(--ui);
+        font-weight: 600;
+        font-size: clamp(18px, 4.8vw, 22px);
+        line-height: 1.65;
+        white-space: pre-wrap;
+        word-break: break-word;
+        transition: opacity 0.25s;
+      }
+      .text.out {
+        opacity: 0;
+      }
+      .status {
+        max-width: 560px;
+        margin: 16px auto 0;
+        padding: 14px 16px;
+        font-size: 13px;
+        line-height: 1.7;
+        color: #444;
+        background: #fff;
+        border-radius: 10px;
+      }
+
+      .status strong {
+        color: #000;
+        font-weight: 600;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 26px;
+      }
+      .big {
+        width: 34%;
+        max-width: 150px;
+        flex: none;
+      }
+      .menu {
+        flex: 1;
+        max-width: 260px;
+        background: #fafafa;
+        border-radius: 12px;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.16);
+        padding: 6px;
+        max-height: 210px;
+        overflow: auto;
+      }
+      .menu button {
+        display: block;
+        width: 100%;
+        text-align: left;
+        font: inherit;
+        font-size: 14px;
+        color: var(--ink);
+        background: none;
+        border: 0;
+        padding: 9px 10px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      .menu button + button {
+        border-top: 1px solid #e6e6e6;
+        border-radius: 0;
+      }
+      .menu button[aria-pressed="true"] {
+        background: var(--sel);
+        border-radius: 5px;
+        border-top-color: transparent;
+      }
+      .menu button[aria-pressed="true"] + button {
+        border-top-color: transparent;
+      }
+
+      /* รูปโพลารอยด์ */
+      .photos {
+        position: relative;
+        margin-top: 34px;
+        aspect-ratio: 1/0.6;
+      }
+      .pol {
+        position: absolute;
+        display: block;
+        background: #fff;
+        padding: 2%;
+        aspect-ratio: 3/4;
+        cursor: pointer;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
+      }
+      .pol .ph {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: linear-gradient(160deg, #e6edf5, #b9c8d9);
+      }
+      .pol img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: none;
+      }
+      .pol.has img {
+        display: block;
+      }
+      .pol.has .add {
+        display: none;
+      }
+      .add {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        font-size: 12px;
+        color: #425468;
+        text-align: center;
+      }
+      .add b {
+        font-size: 26px;
+        font-weight: 300;
+        line-height: 1;
+      }
+      .l {
+        left: -1%;
+        top: 18%;
+        width: 35%;
+        transform: rotate(-3.5deg);
+        z-index: 1;
+      }
+      .c {
+        left: 25%;
+        top: 0;
+        width: 50%;
+        z-index: 2;
+      }
+      .r {
+        right: -1%;
+        top: 15%;
+        width: 35%;
+        transform: rotate(3.5deg);
+        z-index: 1;
+      }
+      .front {
+        position: relative;
+        z-index: 3;
+        margin: -62px 5% 0;
+        height: 96px;
+        border-radius: 12px 12px 0 0;
+        background: linear-gradient(var(--blue1), var(--blue2));
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        padding-bottom: 16px;
+        color: #fff;
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.12);
+      }
+      .sr {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        overflow: hidden;
+      }
+      .pol:focus-within,
+      .ctx :focus-visible,
+      .menu :focus-visible {
+        outline: 2px solid #2b6cb0;
+        outline-offset: 2px;
+      }
+      .status {
+        max-width: 560px;
+        margin: 12px auto 0;
+        font-size: 12px;
+        color: var(--mute);
+        line-height: 1.5;
+        padding: 0 6px;
+      }
+      .toast {
+        position: fixed;
+        left: 50%;
+        bottom: max(24px, env(safe-area-inset-bottom));
+        transform: translate(-50%, 16px);
+        z-index: 9;
+        background: var(--ink);
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 999px;
+        font-size: 14px;
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 0.2s,
+          transform 0.2s;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <defs>
+        <linearGradient id="fg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#b4d4f5" />
+          <stop offset="1" stop-color="#6c9fd9" />
+        </linearGradient>
+      </defs>
+      <symbol id="folder" viewBox="0 0 120 92">
+        <path
+          d="M4 12a8 8 0 0 1 8-8h30l10 10h56a8 8 0 0 1 8 8v62a8 8 0 0 1-8 8H12a8 8 0 0 1-8-8z"
+          fill="url(#fg)"
+        />
+        <path
+          d="M4 30h112v-8a8 8 0 0 0-8-8H52L42 4H12a8 8 0 0 0-8 8z"
+          fill="#fff"
+          opacity=".28"
+        />
+      </symbol>
+    </svg>
+
+    <main class="card">
+      <div class="deco" aria-hidden="true">
+        <svg class="ico" viewBox="0 0 120 92"><use href="#folder" /></svg>
+      </div>
+
+      <h1>
+        <b>Wonbin at</b><span>Chanel PFW</span>
+        <svg class="cursor" viewBox="0 0 24 32" aria-hidden="true">
+          <path
+            d="M3 2v23l6-6 4 9 4-2-4-9h8z"
+            fill="#fff"
+            stroke="#000"
+            stroke-width="2"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </h1>
+      <div class="ctx" role="group" aria-label="เมนู">
+        <button id="copy">ก็อป</button>
+        <a id="tweet" target="_blank" rel="noopener">โพสต์ X</a>
+        <button id="random">สุ่มใหม่ ▸</button>
+      </div>
+      <section class="win">
+        <div class="bar">
+          <span class="dots"><i></i><i></i><i></i></span><span id="cat">—</span>
+        </div>
+        <p class="text" id="text" aria-live="polite">กำลังโหลดคอมเม้น…</p>
+        <div id="hashtags"></div>
+      </section>
+
+      <div class="row">
+        <svg class="ico big" viewBox="0 0 120 92" aria-hidden="true">
+          <use href="#folder" />
+        </svg>
+        <nav class="menu" id="menu" aria-label="หมวดหมู่คอมเม้น"></nav>
+      </div>
+
+      <div class="photos">
+        <div class="pol l has">
+          <div class="ph">
+            <img src="chn2.jpg" alt="WONBIN" />
+          </div>
+        </div>
+
+        <div class="pol c has">
+          <div class="ph">
+            <img src="chn1.jpg" alt="WONBIN" />
+          </div>
+        </div>
+
+        <div class="pol r has">
+          <div class="ph">
+            <img src="chn3.jpg" alt="WONBIN" />
+          </div>
+        </div>
+      </div>
+      <div class="front">CHANEL SS27 · PARIS FASHION WEEK</div>
+    </main>
+    <p class="status" id="status"></p>
+    <div class="toast" id="toast" role="status">ก็อปแล้ว</div>
+
+    <script>
+      /* ============ ตั้งค่าตรงนี้ ============
+   Google Sheet: A = หมวดหมู่, B = คอมเม้น, C = ลิงก์รูป (ไม่บังคับ — จะขึ้นในรูปกลาง), แถวแรกเป็นหัวตาราง
+   ไฟล์ > แชร์ > เผยแพร่ไปยังเว็บ > เลือกชีต + CSV > วางลิงก์ด้านล่าง
+   ถ้าเว้นว่าง จะใช้คอมเม้นตัวอย่างแทน */
+      const SHEET_CSV_URL =
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vR_NRXPbjxpioCqtP42rjSdNBtaAWL8TLLi11xz1HjDHWwg5bAVT3VNybwO-fRsg8I6v7yaQ1XdWR-t/pub?output=csv";
+
+      /* รูปเริ่มต้น 3 ช่อง (ซ้าย, กลาง, ขวา): อัปโหลดรูปไว้ใน repo เดียวกัน เช่น "photo1.jpg" หรือใส่ลิงก์รูปเลย
+   ช่องที่เว้นว่าง ผู้เข้าชมแตะเพื่อเลือกรูปเองได้ */
+      const PHOTO_URLS = ["chn2.jpg", "chn1.jpg", "chn3.jpg"];
+
+      /* ข้อความทวีต (แต่ละบรรทัด) — แก้แฮชแท็กได้ตรงนี้ */
+      const TWEET_LINES = [
+        "WONBIN AT CHANEL PFW",
+        "WONBIN AT CHANEL SS27",
+        "#WONBINforChanelSS27",
+        "#ParisFashionWeek #PFW",
+      ];
+
+      const DEMO = [];
+
+      const $ = (id) => document.getElementById(id);
+      let all = [],
+        current = "ทั้งหมด",
+        last = null;
+
+      function parseCSV(t) {
+        const rows = [];
+        let row = [],
+          cell = "",
+          q = false;
+        for (let i = 0; i < t.length; i++) {
+          const c = t[i];
+          if (q) {
+            if (c === '"') {
+              if (t[i + 1] === '"') {
+                cell += '"';
+                i++;
+              } else q = false;
+            } else cell += c;
+          } else if (c === '"') q = true;
+          else if (c === ",") {
+            row.push(cell);
+            cell = "";
+          } else if (c === "\n" || c === "\r") {
+            if (c === "\r" && t[i + 1] === "\n") i++;
+            row.push(cell);
+            cell = "";
+            rows.push(row);
+            row = [];
+          } else cell += c;
+        }
+        if (cell || row.length) {
+          row.push(cell);
+          rows.push(row);
+        }
+        return rows;
+      }
+
+      async function load() {
+        const demo = () => {
+          all = DEMO.map(([cat, text]) => ({ cat, text, img: "" }));
+        };
+        if (SHEET_CSV_URL) {
+          $("status").innerHTML = `
+   <strong>ข้อแนะนำในการ Comment</strong><br>
+สามารถ Comment ได้ทั้งภาษาไทยและภาษาอังกฤษ
+โดยเน้นสร้าง <strong>Conversation ที่เกี่ยวข้องจริง</strong>
+และพูดถึง <strong>Wonbin + CHANEL / Fashion Week</strong><br><br>
+<strong>EX.</strong><br>
+• Wonbin กับ CHANEL เข้ากันมาก ลุคนี้ดีสุด ๆ<br>
+• วอนบินลุคนี้ที่ Paris Fashion Week หล่อมาก<br>
+• Wonbin looks effortlessly chic on his way to Paris.<br>
+• CHANEL and Wonbin look perfect together!
+  `;
+        }
+        try {
+          const res = await fetch(SHEET_CSV_URL);
+          if (!res.ok) throw new Error(res.status);
+          const rows = parseCSV(await res.text()).slice(1);
+          all = rows
+            .map((r) => ({
+              cat: (r[0] || "").trim() || "อื่น ๆ",
+              text: (r[1] || "").trim(),
+              hashtag: (r[2] || "").trim(),
+            }))
+            .filter((x) => x.text);
+          if (!all.length) throw new Error("empty");
+        } catch (e) {
+          demo();
+          $("status").innerHTML = `
+   <strong>ข้อแนะนำในการ Comment</strong><br>
+สามารถ Comment ได้ทั้งภาษาไทยและภาษาอังกฤษ
+โดยเน้นสร้าง <strong>Conversation ที่เกี่ยวข้องจริง</strong>
+และพูดถึง <strong>Wonbin + CHANEL / Fashion Week</strong><br><br>
+<strong>EX.</strong><br>
+• Wonbin กับ CHANEL เข้ากันมาก ลุคนี้ดีสุด ๆ<br>
+• วอนบินลุคนี้ที่ Paris Fashion Week หล่อมาก<br>
+• Wonbin looks effortlessly chic on his way to Paris.<br>
+• CHANEL and Wonbin look perfect together!
+  `;
+        }
+      }
+
+      function renderMenu() {
+        const cats = ["ทั้งหมด", ...new Set(all.map((x) => x.cat))];
+        $("menu").innerHTML = "";
+        cats.forEach((c) => {
+          const b = document.createElement("button");
+          b.textContent = c;
+          b.setAttribute("aria-pressed", c === current);
+          b.onclick = () => {
+            current = c;
+            renderMenu();
+            pick();
+          };
+          $("menu").appendChild(b);
+        });
+      }
+
+      function pick() {
+        const pool = all.filter(
+          (x) => current === "ทั้งหมด" || x.cat === current,
+        );
+
+        if (!pool.length) return;
+
+        let item;
+
+        do {
+          item = pool[Math.floor(Math.random() * pool.length)];
+        } while (pool.length > 1 && item === last);
+
+        last = item;
+
+        const t = $("text");
+        t.classList.add("out");
+
+        setTimeout(() => {
+          t.textContent = item.text;
+          $("cat").textContent = item.cat;
+          $("hashtags").textContent = item.hashtag || "";
+
+          t.classList.remove("out");
+
+          updateTweetLink();
+        }, 180);
+      }
+
+      function updateTweetLink() {
+        if (!last) return;
+
+        const content = [last.text, last.hashtag].filter(Boolean).join("\n\n");
+
+        $("tweet").href =
+          "https://x.com/intent/tweet?text=" + encodeURIComponent(content);
+      }
+
+      function toast(msg) {
+        const t = $("toast");
+        t.textContent = msg;
+        t.classList.add("show");
+        clearTimeout(toast.id);
+        toast.id = setTimeout(() => t.classList.remove("show"), 1600);
+      }
+
+      async function copy() {
+        if (!last) return;
+
+        const content = [last.text, last.hashtag].filter(Boolean).join("\n");
+
+        try {
+          await navigator.clipboard.writeText(content);
+        } catch (e) {
+          const a = document.createElement("textarea");
+          a.value = content;
+          document.body.appendChild(a);
+          a.select();
+          document.execCommand("copy");
+          a.remove();
+        }
+        toast("Copy done");
+      }
+
+      $("random").onclick = pick;
+      $("copy").onclick = copy;
+
+      load().then(() => {
+        renderMenu();
+        pick();
+      });
+    </script>
+  </body>
+</html>
