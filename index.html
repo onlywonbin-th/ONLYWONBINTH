@@ -629,7 +629,7 @@
       async function copy() {
         if (!last) return;
 
-        const content = [last.text, last.hashtag].filter(Boolean).join("\n");
+        const content = [last.text, last.hashtag].filter(Boolean).join("\n\n");
 
         try {
           await navigator.clipboard.writeText(content);
